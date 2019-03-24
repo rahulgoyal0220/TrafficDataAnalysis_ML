@@ -4,7 +4,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
+
 from sklearn import metrics
 import matplotlib.pyplot as plt
 
@@ -34,8 +36,8 @@ def knnClassfier(data):
     # let us get the predictions using the classifier we had fit above
     y_pred = knn.predict(X_test)
     print_result('Knn Classifier evaluation score', y_test, y_pred)
-    confusion_matrix('Knn Classifier', y_test, y_pred)
-    classification_report('Knn Classifier', y_test, y_pred)
+    display_confusion_matrix('Knn Classifier', y_test, y_pred)
+    display_classification_report('Knn Classifier', y_test, y_pred)
 
 
 def getBestK_vakueKNN(X_train, y_train, X_test, y_test):
@@ -74,19 +76,19 @@ def execute_knn(filename):
 def print_result(headline, true_value, pred):
     print(headline)
     print("accuracy: {}".format(metrics.accuracy_score(true_value, pred)))
-    print("precision: {}".format(metrics.precision_score(true_value, pred)))
-    print("recall: {}".format(metrics.recall_score(true_value, pred)))
-    print("f1: {}".format(metrics.f1_score(true_value, pred)))
+    # print("precision: {}".format(metrics.precision_score(true_value, pred)))
+    # print("recall: {}".format(metrics.recall_score(true_value, pred)))
+    # print("f1: {}".format(metrics.f1_score(true_value, pred)))
 
 
-def confusion_matrix(headline, y_test, y_pred):
+def display_confusion_matrix(headline, y_test, y_pred):
     # Confusion Matrix
     print("Confustion Matrix report: ", headline)
     confusion_matrix(y_test, y_pred)
-    pd.crosstab(y_test, y_pred, rownames=['True'], colnames=['Predicted'], margins=True)
+    print(pd.crosstab(y_test, y_pred, rownames=['True'], colnames=['Predicted'], margins=True))
 
 
-def classification_report(headline, y_test, y_pred):
+def display_classification_report(headline, y_test, y_pred):
     # Classification Report
     print("Classfication report: ", headline)
     print(classification_report(y_test, y_pred))
