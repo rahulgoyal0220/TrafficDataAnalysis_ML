@@ -9,6 +9,7 @@ from statistics import mean
 from pyspark.rdd import RDD
 from pyspark.sql import Row
 from pyspark.sql import DataFrame
+from sklearn import preprocessing
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as pysparkk
 from pyspark.sql.functions import udf, col
@@ -47,7 +48,8 @@ def process_data(filename):
     data = data.withColumn('YEAR', split_col_date.getItem(2))
     data = data.withColumn('DAY_OF_MONTH', split_col_date.getItem(1))
     column_to_drop = ['Wards', 'Zip Codes', 'Community Areas', 'MESSAGE_COUNT', 'RECORD_ID', 'TIME', 'END_LOCATION',
-                      'START_LOCATION', 'COMMENTS']
+                      'START_LOCATION', 'COMMENTS', 'STREET', 'BUS_COUNT', 'STREET_HEADING', 'FROM_STREET', 'TO_STREET',
+                      'SEGMENT_ID', 'SPEED']
     data = data.drop(*column_to_drop)
     return data
 
@@ -97,3 +99,5 @@ def execute(inputFile, outputFile):
     '''
     data = process_data(inputFile)
     write_csv_data_single_file(data, outputFile)
+
+execute("dataset/chicago_traffic_2018.csv", "final_output")
