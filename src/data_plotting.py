@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import itertools
-
+import seaborn as sns
 
 def plotKNN_k_value_graph(neighbors, test_accuracy, train_accuracy):
     # Generate plot
@@ -40,4 +40,16 @@ def plot_confusion_matrix(cm, target_names, title='Confusion matrix', cmap=None,
     plt.tight_layout()
     plt.ylabel('True label')
     plt.xlabel('Predicted label\naccuracy={:0.4f}; misclass={:0.4f}'.format(accuracy, misclass))
+    plt.show()
+
+
+def plot_Feature_imp(clf, features):
+    #plot feature important
+    feature_imp = pd.Series(clf.feature_importances_,index=features).sort_values(ascending=False)
+    sns.barplot(x=feature_imp, y=feature_imp.index)
+    # Add labels to your graph
+    plt.xlabel('Feature Importance Score')
+    plt.ylabel('Features')
+    plt.title("Visualizing Important Features")
+    plt.legend()
     plt.show()

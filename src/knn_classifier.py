@@ -28,7 +28,7 @@ def knnClassfier(data):
     X = data.drop('Congestion_Status', axis=1).values
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
     # Setup a knn classifier with k neighbors
-    knn = KNeighborsClassifier(n_neighbors=6)
+    knn = KNeighborsClassifier(n_neighbors=6, n_jobs =-1)
     # Fit the model
     knn.fit(X_train, y_train)
     # Get accuracy. Note: In case of classification algorithms score method represents accuracy.
